@@ -1,0 +1,14 @@
+PODS:
+  - RappleColorPicker (0.1.0)
+
+DEPENDENCIES:
+  - RappleColorPicker (from `../`)
+
+EXTERNAL SOURCES:
+  RappleColorPicker:
+    :path: ../
+
+SPEC CHECKSUMS:
+  RappleColorPicker: 66303c24964747bd99d771b8ea662960b8586901
+
+COCOAPODS: 0.39.0
