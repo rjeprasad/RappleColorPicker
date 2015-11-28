@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'CA9B366BC6016DEB8AE5F40C'
+               BlueprintIdentifier = 'DA1E955FC540F2A6A9813FB7'
                BlueprintName = 'RappleColorPicker'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'RappleColorPicker.framework'>

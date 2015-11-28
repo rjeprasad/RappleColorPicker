@@ -7,12 +7,23 @@
 //
 
 import UIKit
+import RappleColorPicker
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, RappleColorPickerViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    @IBAction func openColorPallet(sender:AnyObject?) {
+        RappleColorPicker.setPickerDelegate(delegate: self, tintColor: UIColor.darkGrayColor(), bgColor: UIColor.whiteColor())
+        RappleColorPicker.openColorPallet(title: nil, onViewController: self, origin: CGPointMake(100, 100))
+    }
+    
+    func colorSelected(color: UIColor) {
+        self.view.backgroundColor = color
+        RappleColorPicker.close()
     }
 
     override func didReceiveMemoryWarning() {
