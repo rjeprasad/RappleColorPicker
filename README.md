@@ -24,38 +24,33 @@ pod "RappleColorPicker"
 import progress library
 
 ```ruby
-import RappleProgressHUD
+import RappleColorPicker
 ```
+
 </BR>
-Start Rapple progress indicator without any text message 
-</BR>default attribute RappleModernAttributes
+Open color pallet
+</BR>Color picker size - CGSize(218, 352)
+</BR>@param     onViewController progress UI attributes
+</BR>@param     origin origin point of the color pallet
+</BR>@param     delegate RappleColorPickerDelegate
+</BR>@param     title color pallet name default "Color Picker"
+*/
 ```ruby
-RappleActivityIndicatorView.startAnimating()
+RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(10, 100), delegate: self, title: "Colors")
 ```
+
 </BR>
-Start Rapple progress indicator with text message
-</BR>param  - label text for progress text label
-</BR>default attribute RappleModernAttributes
+To receive selected color implement 'RappleColorPickerDelegate' delegate
 ```ruby
-RappleActivityIndicatorView.startAnimatingWithLabel("Loading...")
+func colorSelected(color: UIColor) {
+
+}
 ```
+
 </BR>
-Start Rapple progress indicator with attributes and without any text message
-</BR>param  - attribute progress UI attributes
+Close color picker
 ```ruby
-RappleActivityIndicatorView.startAnimating(attributes: RappleModernAttributes)
-```
-</BR>
-Start Rapple progress indicator with text message with attributes
-</BR>param  - label text for progress text label
-</BR>param  - attribute progress UI attributes
-```ruby
-RappleActivityIndicatorView.startAnimatingWithLabel("Loading...", attributes: RappleModernAttributes)
-```
-</BR>
-Stop Rapple progress indicator
-```ruby
-RappleActivityIndicatorView.stopAnimating()
+RappleColorPicker.close()
 ```
 
 ###Demo

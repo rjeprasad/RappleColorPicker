@@ -80,6 +80,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5DE7D3CA1C09CD4A00DE3177 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Demo;
+			sourceTree = SOURCE_ROOT;
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +111,7 @@
 		607FACD21AFB9204008FA782 /* Example for RappleColorPicker */ = {
 			isa = PBXGroup;
 			children = (
+				5DE7D3CA1C09CD4A00DE3177 /* Demo */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
