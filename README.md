@@ -28,7 +28,7 @@ import RappleColorPicker
 ```
 
 </BR>
-Open color pallet
+To open color picker
 </BR>Color picker size - CGSize(218, 352)
 </BR>@param     onViewController progress UI attributes
 </BR>@param     origin origin point of the color pallet
@@ -48,13 +48,13 @@ func colorSelected(color: UIColor) {
 ```
 
 </BR>
-Close color picker
+To close color picker
 ```ruby
 RappleColorPicker.close()
 ```
 
 ###Demo
-![demo](Example/Demo/Demo.gif)
+![demo](Example/Demo/Picker.gif)
 
 ## Example Project
 
