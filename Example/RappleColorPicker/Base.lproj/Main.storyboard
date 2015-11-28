@@ -19,7 +19,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fG-kv-oA5">
                                 <rect key="frame" x="241" y="174" width="119" height="30"/>
-                                <state key="normal" title="Change BG Color"/>
+                                <state key="normal" title="Change BG Color">
+                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="openColorPallet:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fXc-28-rDn"/>
                                 </connections>

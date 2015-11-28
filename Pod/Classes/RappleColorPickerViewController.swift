@@ -1,10 +1,31 @@
-//
-//  RappleColorPickerViewController.swift
-//  Pods
-//
-//  Created by Rajeev Prasad on 28/11/15.
-//
-//
+/* **
+RappleColorPicker.swift
+Custom Activity Indicator with swift 2.0
+
+Created by Rajeev Prasad on 28/11/15.
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Rajeev Prasad <rjeprasad@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+** */
 
 import UIKit
 
@@ -13,23 +34,24 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     private var collectionView : UICollectionView!
     private var titleLabel : UILabel!
     
-    var tintColor = UIColor.whiteColor()
-    var bgColor = UIColor.blackColor()
+    var delegate: RappleColorPickerDelegate?
     
-    var delegate: RappleColorPickerViewControllerDelegate?
+    private var colorDic = [Int: [UIColor]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setAllColor()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.view.backgroundColor = bgColor
+        self.view.backgroundColor = UIColor.lightGrayColor()
         
         self.view.layer.cornerRadius = 4.0
         self.view.layer.borderWidth = 2.0
-        self.view.layer.borderColor = tintColor.CGColor
+        self.view.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.layer.masksToBounds = true
         
         let layout = RappleColorPickerFlowLayout()
@@ -38,19 +60,19 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
         layout.minimumLineSpacing = 0
         layout.itemSize = CGSize(width: 30, height: 30)
         
-        let colRect = CGRectMake(0, 30, 192, 322)
+        let colRect = CGRectMake(0, 30, view.frame.width, view.frame.height - 30)
         collectionView = UICollectionView(frame: colRect, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.backgroundColor = tintColor
+        collectionView.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(collectionView)
         collectionView.reloadData()
         
-        titleLabel = UILabel(frame: CGRectMake(2,2,180,28))
-        titleLabel.font = UIFont.systemFontOfSize(16)
+        titleLabel = UILabel(frame: CGRectMake(2,2,view.frame.width-4,28))
+        titleLabel.font = UIFont.boldSystemFontOfSize(16)
         titleLabel.textAlignment = .Center
-        titleLabel.textColor = tintColor
+        titleLabel.textColor = UIColor.whiteColor()
         titleLabel.text = self.title
         self.view.addSubview(titleLabel)
     }
@@ -62,24 +84,24 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 10
+        return colorDic.count
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return (colorDic[section]?.count)!
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
         cell.backgroundColor = getColor(indexPath.section, row: indexPath.row)
         cell.layer.cornerRadius = 1.0
-        cell.layer.borderColor = UIColor.clearColor().CGColor
+        cell.layer.borderColor = UIColor.whiteColor().CGColor
         cell.layer.borderWidth = 1.0
         return cell
     }
     
     func getColor(section:Int, row:Int) -> UIColor {
-        return UIColor.redColor()
+        return colorDic[section]![row]
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -104,5 +126,141 @@ class RappleColorPickerFlowLayout : UICollectionViewFlowLayout {
             return attributes
         }
         return nil
+    }
+}
+
+
+extension RappleColorPickerViewController {
+    
+    private func setAllColor(){
+        colorDic[0] = [
+            UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.886274509803922, green: 0.886274509803922, blue: 0.886274509803922, alpha: 1.0),
+            UIColor(red: 0.666666666666667, green: 0.666666666666667, blue: 0.666666666666667, alpha: 1.0),
+            UIColor(red: 0.43921568627451, green: 0.43921568627451, blue: 0.43921568627451, alpha: 1.0),
+            UIColor(red: 0.219607843137255, green: 0.219607843137255, blue: 0.219607843137255, alpha: 1.0),
+            UIColor(red: 0.109803921568627, green: 0.109803921568627, blue: 0.109803921568627, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[1] = [
+            UIColor(red: 0.847058823529412, green: 1.0, blue: 0.972549019607843, alpha: 1.0),
+            UIColor(red: 0.568627450980392, green: 1.0, blue: 0.925490196078431, alpha: 1.0),
+            UIColor(red: 0.0, green: 1.0, blue: 0.831372549019608, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.717647058823529, blue: 0.6, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.458823529411765, blue: 0.380392156862745, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.329411764705882, blue: 0.274509803921569, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.2, blue: 0.164705882352941, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[2] = [
+            UIColor(red: 0.847058823529412, green: 1.0, blue: 0.847058823529412, alpha: 1.0),
+            UIColor(red: 0.63921568627451, green: 1.0, blue: 0.63921568627451, alpha: 1.0),
+            UIColor(red: 0.219607843137255, green: 1.0, blue: 0.219607843137255, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.83921568627451, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.517647058823529, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.356862745098039, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[3] = [
+            UIColor(red: 1.0, green: 1.0, blue: 0.847058823529412, alpha: 1.0),
+            UIColor(red: 1.0, green: 1.0, blue: 0.568627450980392, alpha: 1.0),
+            UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.717647058823529, green: 0.717647058823529, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.458823529411765, green: 0.458823529411765, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.329411764705882, green: 0.329411764705882, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.2, green: 0.2, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[4] = [
+            UIColor(red: 1.0, green: 0.92156862745098, blue: 0.847058823529412, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.83921568627451, blue: 0.67843137254902, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.666666666666667, blue: 0.337254901960784, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.498039215686275, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.627450980392157, green: 0.313725490196078, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.43921568627451, green: 0.219607843137255, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.247058823529412, green: 0.12156862745098, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[5] = [
+            UIColor(red: 1.0, green: 0.886274509803922, blue: 0.847058823529412, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.756862745098039, blue: 0.67843137254902, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.501960784313725, blue: 0.337254901960784, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.247058823529412, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.658823529411765, green: 0.164705882352941, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.47843137254902, green: 0.117647058823529, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.298039215686275, green: 0.0745098039215686, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[6] = [
+            UIColor(red: 1.0, green: 0.847058823529412, blue: 0.847058823529412, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.67843137254902, blue: 0.67843137254902, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.337254901960784, blue: 0.337254901960784, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.627450980392157, green: 0.0, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.43921568627451, green: 0.0, blue: 0.0, alpha: 1.0),
+            UIColor(red: 0.247058823529412, green: 0.0, blue: 0.0, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[7] = [
+            UIColor(red: 1.0, green: 0.847058823529412, blue: 1.0, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.63921568627451, blue: 1.0, alpha: 1.0),
+            UIColor(red: 1.0, green: 0.219607843137255, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.83921568627451, green: 0.0, blue: 0.83921568627451, alpha: 1.0),
+            UIColor(red: 0.517647058823529, green: 0.0, blue: 0.517647058823529, alpha: 1.0),
+            UIColor(red: 0.356862745098039, green: 0.0, blue: 0.356862745098039, alpha: 1.0),
+            UIColor(red: 0.2, green: 0.0, blue: 0.2, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[8] = [
+            UIColor(red: 0.92156862745098, green: 0.847058823529412, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.83921568627451, green: 0.67843137254902, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.666666666666667, green: 0.337254901960784, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.498039215686275, green: 0.0, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.298039215686275, green: 0.0, blue: 0.6, alpha: 1.0),
+            UIColor(red: 0.2, green: 0.0, blue: 0.4, alpha: 1.0),
+            UIColor(red: 0.0980392156862745, green: 0.0, blue: 0.2, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[9] = [
+            UIColor(red: 0.847058823529412, green: 0.847058823529412, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.67843137254902, green: 0.67843137254902, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.337254901960784, green: 0.337254901960784, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0, blue: 0.627450980392157, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0, blue: 0.43921568627451, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0, blue: 0.247058823529412, alpha: 1.0)
+        ]
+        
+        
+        
+        colorDic[10] = [
+            UIColor(red: 0.847058823529412, green: 0.898039215686275, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.67843137254902, green: 0.784313725490196, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.337254901960784, green: 0.556862745098039, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.333333333333333, blue: 1.0, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.2, blue: 0.6, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.133333333333333, blue: 0.4, alpha: 1.0),
+            UIColor(red: 0.0, green: 0.0666666666666667, blue: 0.2, alpha: 1.0)
+        ]
     }
 }
