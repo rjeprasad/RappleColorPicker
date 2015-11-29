@@ -28,19 +28,48 @@ import RappleColorPicker
 ```
 
 </BR>
-To open color picker
-</BR>Color picker size - CGSize(218, 352)
-</BR>@param     onViewController progress UI attributes
-</BR>@param     origin origin point of the color pallet
-</BR>@param     delegate RappleColorPickerDelegate
-</BR>@param     title color pallet name default "Color Picker"
-*/
+Open color picker with custom look and feel (optional)
+
+Color picker size - W(218) x H(352) fixed size for now
+
+@param     onViewController opening viewController
+
+@param     origin origin point of the color pallet
+
+@param     delegate RappleColorPickerDelegate
+
+@param     attributes look and feel attribute (Title, BGColor, TintColor, Style)
+
 ```ruby
-RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(10, 100), delegate: self, title: "Colors")
+let attributes : [RappleCPAttributeKey : AnyObject] = [
+.Title : "Pick a Color",
+.BGColor : UIColor.blackColor(),
+.TintColor : UIColor.whiteColor(),
+.Style : RappleCPStyleCircle]
+
+RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, attributes: attributes)
+```
+
+</BR>
+Open color picker with default look and feel
+
+Color picker size - W(218) x H(352) fixed size for now
+
+@param     onViewController opening viewController
+
+@param     origin origin point of the color pallet
+
+@param     delegate RappleColorPickerDelegate
+
+@param     title color pallet name default "Color Picker"
+
+```ruby
+RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, title : "Colors")
 ```
 
 </BR>
 To receive selected color implement 'RappleColorPickerDelegate' delegate
+
 ```ruby
 func colorSelected(color: UIColor) {
 
@@ -49,6 +78,7 @@ func colorSelected(color: UIColor) {
 
 </BR>
 To close color picker
+
 ```ruby
 RappleColorPicker.close()
 ```
