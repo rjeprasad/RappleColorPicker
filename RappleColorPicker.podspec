@@ -4,7 +4,7 @@ s.version          = "1.0.2"
 s.summary          = "RappleColorPicker - Easy to use color pricker for iOS apps"
 
 s.description      = <<-DESC
-Prexible and easy to use complete UI color pricker in swift 2.0.
+Flexible and easy to use complete UI color pricker in swift 2.0.
 DESC
 
 s.homepage         = "https://github.com/rjeprasad/RappleColorPicker"
