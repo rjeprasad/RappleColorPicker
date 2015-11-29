@@ -24,8 +24,6 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
             .Style : RappleCPStyleCircle]
         
         RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, attributes: attributes)
-        
-        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, title : "Colors")
     }
     
     func colorSelected(color: UIColor) {
