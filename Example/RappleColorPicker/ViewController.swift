@@ -16,7 +16,9 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
     }
     
     @IBAction func openColorPallet(sender:AnyObject?) {
-        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(10, 100), delegate: self, title: "Colors")
+        let attributes : [RappleCPAttributeKey : AnyObject] = [.Title : "Pick a Color",
+            .BGColor : UIColor.blackColor(), .TintColor : UIColor.whiteColor(), .Style : RappleCPStyleCircle]
+        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, attributes: attributes)
     }
     
     func colorSelected(color: UIColor) {

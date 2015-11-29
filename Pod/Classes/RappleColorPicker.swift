@@ -30,11 +30,31 @@ THE SOFTWARE.
 import UIKit
 
 /**
- RappleColorPickerDelegate - colorSelected selected color from color pallet
+ RappleColorPickerDelegate public delegate
  */
 public protocol RappleColorPickerDelegate {
+    /**
+     Retrieve selected color from color picker
+     */
     func colorSelected(color:UIColor)
 }
+
+/**
+ RappleColorPicker attribute keys
+ case Title     Title text
+ case BGColor   Background color
+ case Style     Cell style (Square, Circle)
+ case TintColor Tint Color (Text color, cell border color)
+ */
+public enum RappleCPAttributeKey : String {
+    case Title = "Title"
+    case BGColor = "BGColor"
+    case Style = "Style"
+    case TintColor = "TintColor"
+}
+
+public let RappleCPStyleSquare = "Square"
+public let RappleCPStyleCircle = "Circle"
 
 /**
  RappleColorPicker - Easy to use color pricker for iOS apps
@@ -45,58 +65,87 @@ public class RappleColorPicker: NSObject {
     private var background : UIView?
     private var closeButton : UIButton?
     
-    private var delegate : RappleColorPickerDelegate?
-    
     private static let sharedInstance = RappleColorPicker()
     
     /**
-     Open color pallet
-     Color picker size - CGSize(218, 352)
-     @param     onViewController progress UI attributes
+     Open color picker with default look and feel
+     Color picker size - W(218) x H(352) fixed size for now
+     @param     onViewController opening viewController
      @param     origin origin point of the color pallet
      @param     delegate RappleColorPickerDelegate
      @param     title color pallet name default "Color Picker"
      */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
         
+        var attributes : [RappleCPAttributeKey : AnyObject]?
+        if title != nil {
+            attributes = [.Title : title!]
+        }
+        
+        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes)
+    }
+    
+    /**
+     Open color picker with custom look and feel (optional)
+     Color picker size - W(218) x H(352) fixed size for now
+     @param     onViewController opening viewController
+     @param     origin origin point of the color pallet
+     @param     delegate RappleColorPickerDelegate
+     @param     attributes look and feel attribute (Title, BGColor, TintColor, Style)
+     */
+    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
+        
         let this = RappleColorPicker.sharedInstance
         
-        this.delegate = delegate
+        var title = attributes?[.Title] as? String; if title == nil { title = "Color Picker" }
+        var bgColor = attributes?[.BGColor] as? UIColor; if bgColor == nil { bgColor = UIColor.darkGrayColor() }
+        var tintColor = attributes?[.TintColor] as? UIColor; if tintColor == nil { tintColor = UIColor.whiteColor() }
+        var style = attributes?[.Style] as? String; if style == nil { style = RappleCPStyleCircle }
+        
+        let attrib : [RappleCPAttributeKey:AnyObject] = [
+            .Title : title!,
+            .BGColor  : bgColor!,
+            .TintColor : tintColor!,
+            .Style  : style!
+        ]
         
         this.background = UIView(frame: vc.view.bounds)
         this.background?.backgroundColor = UIColor.clearColor()
         vc.view.addSubview(this.background!)
         
         this.closeButton = UIButton(frame: this.background!.bounds)
-        this.closeButton?.addTarget(this, action: "closeTapped:", forControlEvents: .TouchUpInside)
+        this.closeButton?.addTarget(this, action: "closeTapped", forControlEvents: .TouchUpInside)
         this.background?.addSubview(this.closeButton!)
         
         var point = CGPointMake(origin.x, origin.y)
         if origin.x < 0 { point.x = 0 }
         if origin.y < 0 { point.y = 0 }
-        if origin.x + 220 > vc.view.bounds.width { point.x = vc.view.bounds.width - 220 }
+        if origin.x + 224 > vc.view.bounds.width { point.x = vc.view.bounds.width - 224 }
         if origin.y + 354 > vc.view.bounds.height { point.y = vc.view.bounds.height - 354 }
         
         this.colorVC = RappleColorPickerViewController()
-        this.colorVC?.delegate = this.delegate
-        this.colorVC?.title = title != nil ? title : "Color Picker"
-        this.colorVC!.view.frame = CGRectMake(point.x, point.y, 218, 352)
+        this.colorVC?.delegate = delegate
+        this.colorVC?.attributes = attrib
+        this.colorVC!.view.frame = CGRectMake(point.x, point.y, 222, 352)
         this.background!.addSubview(this.colorVC!.view)
         
     }
     
     /**
-     Close color pallet
+     Close color picker Class func
      */
     public class func close(){
         let this = RappleColorPicker.sharedInstance
-        this.background?.removeFromSuperview()
-        this.colorVC = nil
-        this.closeButton = nil
-        this.background = nil
+        this.closeTapped()
     }
     
-    internal func closeTapped(sender : AnyObject?) {
-        RappleColorPicker.close()
+    /**
+     Close color picker
+     */
+    internal func closeTapped(){
+        self.background?.removeFromSuperview()
+        self.colorVC = nil
+        self.closeButton = nil
+        self.background = nil
     }
 }

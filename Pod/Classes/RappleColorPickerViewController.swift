@@ -35,6 +35,12 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     private var titleLabel : UILabel!
     
     var delegate: RappleColorPickerDelegate?
+    var attributes : [RappleCPAttributeKey : AnyObject] = [
+        .Title : "Color Picker",
+        .BGColor  : UIColor.blackColor(),
+        .TintColor : UIColor.whiteColor(),
+        .Style  : RappleCPStyleCircle
+    ]
     
     private var colorDic = [Int: [UIColor]]()
     
@@ -47,11 +53,11 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.view.backgroundColor = UIColor.lightGrayColor()
+        self.view.backgroundColor = attributes[RappleCPAttributeKey.BGColor] as? UIColor
         
         self.view.layer.cornerRadius = 4.0
         self.view.layer.borderWidth = 2.0
-        self.view.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.view.layer.borderColor = UIColor.darkGrayColor().CGColor
         self.view.layer.masksToBounds = true
         
         let layout = RappleColorPickerFlowLayout()
@@ -60,20 +66,20 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
         layout.minimumLineSpacing = 0
         layout.itemSize = CGSize(width: 30, height: 30)
         
-        let colRect = CGRectMake(0, 30, view.frame.width, view.frame.height - 30)
+        let colRect = CGRectMake(2, 30, view.frame.width, view.frame.height - 30)
         collectionView = UICollectionView(frame: colRect, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.backgroundColor = UIColor.lightGrayColor()
+        collectionView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(collectionView)
         collectionView.reloadData()
         
         titleLabel = UILabel(frame: CGRectMake(2,2,view.frame.width-4,28))
         titleLabel.font = UIFont.boldSystemFontOfSize(16)
         titleLabel.textAlignment = .Center
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.text = self.title
+        titleLabel.textColor = attributes[RappleCPAttributeKey.TintColor] as? UIColor
+        titleLabel.text = attributes[RappleCPAttributeKey.Title] as? String
         self.view.addSubview(titleLabel)
     }
     
@@ -94,8 +100,12 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
         cell.backgroundColor = getColor(indexPath.section, row: indexPath.row)
-        cell.layer.cornerRadius = 1.0
-        cell.layer.borderColor = UIColor.whiteColor().CGColor
+        if attributes[RappleCPAttributeKey.Style] as? String == RappleCPStyleCircle {
+            cell.layer.cornerRadius = 15.0
+        } else {
+            cell.layer.cornerRadius = 1.0
+        }
+        cell.layer.borderColor = (attributes[RappleCPAttributeKey.TintColor] as? UIColor)?.CGColor
         cell.layer.borderWidth = 1.0
         return cell
     }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = "RappleColorPicker"
-s.version          = "1.0.1"
+s.version          = "1.0.2"
 s.summary          = "RappleColorPicker - Easy to use color pricker for iOS apps"
 
 s.description      = <<-DESC
