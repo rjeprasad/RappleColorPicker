@@ -78,7 +78,7 @@ public class RappleColorPicker: NSObject {
      @param     origin origin point of the color pallet
      @param     delegate RappleColorPickerDelegate
      @param     title color pallet name default "Color Picker"
-     @param     tag identifyable tag
+     @param     tag tag
      */
     
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
@@ -102,7 +102,7 @@ public class RappleColorPicker: NSObject {
      @param     origin origin point of the color pallet
      @param     delegate RappleColorPickerDelegate
      @param     attributes look and feel attribute (Title, BGColor, TintColor, Style)
-     @param     tag identifyable tag
+     @param     tag tag
      */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
         RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: 0)
