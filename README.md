@@ -67,11 +67,20 @@ Color picker size - W(218) x H(352) fixed size for now
 RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, title : "Colors")
 ```
 
+
+```ruby
+RappleColorPicker.openColorPallet(onViewController: self, origin: CGPointMake(50, 100), delegate: self, title : "Colors", tag: Int)
+```
+
 </BR>
 To receive selected color implement 'RappleColorPickerDelegate' delegate
 
 ```ruby
 func colorSelected(color: UIColor) {
+
+}
+
+func colorSelected(color:UIColor, tag: Int) {
 
 }
 ```
