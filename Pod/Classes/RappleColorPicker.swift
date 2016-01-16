@@ -85,6 +85,10 @@ public class RappleColorPicker: NSObject {
         RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, title: title, tag: 0)
     }
     
+    /**
+     Open color picker with default look and feel
+     Color picker size - W(218) x H(352) fixed size for now
+     */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
         
         var attributes : [RappleCPAttributeKey : AnyObject]?
@@ -108,6 +112,10 @@ public class RappleColorPicker: NSObject {
         RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: 0)
     }
     
+    /**
+     Open color picker with custom look and feel (optional)
+     Color picker size - W(218) x H(352) fixed size for now
+     */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
         
         let this = RappleColorPicker.sharedInstance
