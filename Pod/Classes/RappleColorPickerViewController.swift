@@ -35,6 +35,7 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     private var titleLabel : UILabel!
     
     var delegate: RappleColorPickerDelegate?
+    var tag: Int = 1
     var attributes : [RappleCPAttributeKey : AnyObject] = [
         .Title : "Color Picker",
         .BGColor  : UIColor.blackColor(),
@@ -115,7 +116,13 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        delegate?.colorSelected(getColor(indexPath.section, row: indexPath.row))
+        if delegate?.respondsToSelector("colorSelected:") == true {
+            delegate?.colorSelected?(getColor(indexPath.section, row: indexPath.row))
+        }
+        
+        if delegate?.respondsToSelector("colorSelected:tag:") == true {
+            delegate?.colorSelected?(getColor(indexPath.section, row: indexPath.row), tag: tag)
+        }
     }
 }
 

@@ -32,11 +32,13 @@ import UIKit
 /**
  RappleColorPickerDelegate public delegate
  */
-public protocol RappleColorPickerDelegate {
+@objc
+public protocol RappleColorPickerDelegate: NSObjectProtocol {
     /**
      Retrieve selected color from color picker
      */
-    func colorSelected(color:UIColor)
+    optional func colorSelected(color:UIColor)
+    optional func colorSelected(color:UIColor, tag: Int)
 }
 
 /**
@@ -65,6 +67,8 @@ public class RappleColorPicker: NSObject {
     private var background : UIView?
     private var closeButton : UIButton?
     
+    private var tag: Int = 0
+    
     private static let sharedInstance = RappleColorPicker()
     
     /**
@@ -74,8 +78,14 @@ public class RappleColorPicker: NSObject {
      @param     origin origin point of the color pallet
      @param     delegate RappleColorPickerDelegate
      @param     title color pallet name default "Color Picker"
+     @param     tag identifyable tag
      */
+    
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
+        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, title: title, tag: 0)
+    }
+    
+    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
         
         var attributes : [RappleCPAttributeKey : AnyObject]?
         if title != nil {
@@ -92,8 +102,13 @@ public class RappleColorPicker: NSObject {
      @param     origin origin point of the color pallet
      @param     delegate RappleColorPickerDelegate
      @param     attributes look and feel attribute (Title, BGColor, TintColor, Style)
+     @param     tag identifyable tag
      */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
+        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: 0)
+    }
+    
+    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
         
         let this = RappleColorPicker.sharedInstance
         
@@ -126,6 +141,7 @@ public class RappleColorPicker: NSObject {
         this.colorVC = RappleColorPickerViewController()
         this.colorVC?.delegate = delegate
         this.colorVC?.attributes = attrib
+        this.colorVC?.tag = tag
         this.colorVC!.view.frame = CGRectMake(point.x, point.y, 222, 352)
         this.background!.addSubview(this.colorVC!.view)
         
