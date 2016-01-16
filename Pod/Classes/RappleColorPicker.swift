@@ -67,8 +67,6 @@ public class RappleColorPicker: NSObject {
     private var background : UIView?
     private var closeButton : UIButton?
     
-    private var tag: Int = 0
-    
     private static let sharedInstance = RappleColorPicker()
     
     /**
@@ -90,13 +88,12 @@ public class RappleColorPicker: NSObject {
      Color picker size - W(218) x H(352) fixed size for now
      */
     public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
-        
         var attributes : [RappleCPAttributeKey : AnyObject]?
         if title != nil {
             attributes = [.Title : title!]
         }
         
-        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes)
+        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: tag)
     }
     
     /**
