@@ -1,6 +1,5 @@
 # RappleColorPicker
 
-[![CI Status](http://img.shields.io/travis/Rajeev Prasad/RappleColorPicker.svg?style=flat)](https://travis-ci.org/Rajeev Prasad/RappleColorPicker)
 [![Version](https://img.shields.io/cocoapods/v/RappleColorPicker.svg?style=flat)](http://cocoapods.org/pods/RappleColorPicker)
 [![License](https://img.shields.io/cocoapods/l/RappleColorPicker.svg?style=flat)](http://cocoapods.org/pods/RappleColorPicker)
 [![Platform](https://img.shields.io/cocoapods/p/RappleColorPicker.svg?style=flat)](http://cocoapods.org/pods/RappleColorPicker)
