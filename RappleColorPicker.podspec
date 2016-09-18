@@ -14,6 +14,6 @@ s.source           = { :git => "https://github.com/rjeprasad/RappleColorPicker.g
 
 s.platform     = :ios, '8.0'
 s.requires_arc = true
-
+s.preserve_paths = 'LICENSE', 'README.md'
 s.source_files = 'Pod/Classes/*'
 end
