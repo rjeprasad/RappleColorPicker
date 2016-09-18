@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
 s.name             = "RappleColorPicker"
-s.version          = "1.2.5"
+s.version          = "2.0.0"
 s.summary          = "RappleColorPicker - Easy to use color pricker for iOS apps"
 
 s.description      = <<-DESC
-Flexible and easy to use complete UI color pricker in swift 2.0.
+Flexible and easy to use complete UI color pricker in swift 3.0.
 DESC
 
 s.homepage         = "https://github.com/rjeprasad/RappleColorPicker"

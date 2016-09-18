@@ -1,49 +1,53 @@
 /* **
-RappleColorPicker.swift
-Custom Activity Indicator with swift 2.0
-
-Created by Rajeev Prasad on 28/11/15.
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Rajeev Prasad <rjeprasad@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-** */
+ RappleColorPicker.swift
+ Custom Activity Indicator with swift 2.0
+ 
+ Created by Rajeev Prasad on 28/11/15.
+ 
+ The MIT License (MIT)
+ 
+ Copyright (c) 2016 Rajeev Prasad <rjeprasad@gmail.com>
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ** */
 
 import UIKit
 
-class RappleColorPickerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class RappleColorPickerViewController: UIViewController {
     
-    private var collectionView : UICollectionView!
-    private var titleLabel : UILabel!
+    fileprivate var collectionView : UICollectionView!
+    fileprivate var titleLabel : UILabel!
     
     var delegate: RappleColorPickerDelegate?
     var tag: Int = 1
     var attributes : [RappleCPAttributeKey : AnyObject] = [
-        .Title : "Color Picker",
-        .BGColor  : UIColor.blackColor(),
-        .TintColor : UIColor.whiteColor(),
-        .Style  : RappleCPStyleCircle
+        .Title : "Color Picker" as AnyObject,
+        .BGColor  : UIColor.black,
+        .TintColor : UIColor.white,
+        .Style  : RappleCPStyleCircle as AnyObject
     ]
     
-    private var colorDic = [Int: [UIColor]]()
+    fileprivate var colorDic = [Int: [UIColor]]()
+    fileprivate var allColors = [UIColor]()
+    
+    var size: CGSize = CGSize(width: 230, height: 384)
+    fileprivate var cellSize = CGSize(width: 30, height: 30)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,105 +55,99 @@ class RappleColorPickerViewController: UIViewController, UICollectionViewDataSou
         setAllColor()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.view.backgroundColor = attributes[RappleCPAttributeKey.BGColor] as? UIColor
+        self.view.backgroundColor = attributes[.BGColor] as? UIColor
         
         self.view.layer.cornerRadius = 4.0
         self.view.layer.borderWidth = 2.0
-        self.view.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.view.layer.borderColor = (attributes[.BorderColor] as? UIColor ?? UIColor.darkGray).cgColor
         self.view.layer.masksToBounds = true
         
-        let layout = RappleColorPickerFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 30, height: 30)
+        var colViewY:CGFloat = 0
+        if let title = attributes[.Title] as? String {
+            titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: size.width, height: 26))
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            titleLabel.textAlignment = .center
+            titleLabel.textColor = attributes[.TintColor] as? UIColor
+            titleLabel.text = title
+            self.view.addSubview(titleLabel)
+            colViewY = 26
+        }
         
-        let colRect = CGRectMake(2, 30, view.frame.width, view.frame.height - 30)
-        collectionView = UICollectionView(frame: colRect, collectionViewLayout: layout)
+        let colW = size.width - 8
+        let colH = size.height - (colViewY + 4) - 4
+        
+        let cellW = (colW - 12) / 7
+        cellSize = CGSize(width: cellW, height: cellW)
+        
+        let colRect = CGRect(x: 4, y: colViewY + 4, width: colW, height: colH)
+        collectionView = UICollectionView(frame: colRect, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.backgroundColor = UIColor.clear
         self.view.addSubview(collectionView)
         collectionView.reloadData()
-        
-        titleLabel = UILabel(frame: CGRectMake(2,2,view.frame.width-4,28))
-        titleLabel.font = UIFont.boldSystemFontOfSize(16)
-        titleLabel.textAlignment = .Center
-        titleLabel.textColor = attributes[RappleCPAttributeKey.TintColor] as? UIColor
-        titleLabel.text = attributes[RappleCPAttributeKey.Title] as? String
-        self.view.addSubview(titleLabel)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+}
+
+extension RappleColorPickerViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return colorDic.count
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (colorDic[section]?.count)!
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return allColors.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
-        cell.backgroundColor = getColor(indexPath.section, row: indexPath.row)
-        if attributes[RappleCPAttributeKey.Style] as? String == RappleCPStyleCircle {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        cell.backgroundColor = getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row)
+        if attributes[.Style] as? String == RappleCPStyleCircle {
             cell.layer.cornerRadius = 15.0
         } else {
             cell.layer.cornerRadius = 1.0
         }
-        cell.layer.borderColor = (attributes[RappleCPAttributeKey.TintColor] as? UIColor)?.CGColor
+        cell.layer.borderColor = (attributes[.TintColor] as? UIColor)?.cgColor
         cell.layer.borderWidth = 1.0
         return cell
     }
     
-    func getColor(section:Int, row:Int) -> UIColor {
-        return colorDic[section]![row]
-    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if delegate?.respondsToSelector("colorSelected:") == true {
-            delegate?.colorSelected?(getColor(indexPath.section, row: indexPath.row))
-        }
-        
-        if delegate?.respondsToSelector("colorSelected:tag:") == true {
-            delegate?.colorSelected?(getColor(indexPath.section, row: indexPath.row), tag: tag)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if delegate?.responds(to: #selector(RappleColorPickerDelegate.colorSelected(_:tag:))) == true {
+            delegate?.colorSelected?(getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row), tag: tag)
+        } else if delegate?.responds(to: #selector(RappleColorPickerDelegate.colorSelected(_:))) == true {
+            delegate?.colorSelected?(getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row))
         }
     }
-}
-
-class RappleColorPickerFlowLayout : UICollectionViewFlowLayout {
     
-    let cellSpacing:CGFloat = 1
+    func getColor(_ section:Int, row:Int) -> UIColor {
+        return allColors[row]
+    }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        if let attributes = super.layoutAttributesForElementsInRect(rect) {
-            for (index, attribute) in attributes.enumerate() {
-                if index == 0 { continue }
-                let prevLayoutAttributes = attributes[index - 1]
-                let origin = CGRectGetMaxX(prevLayoutAttributes.frame)
-                if(origin + cellSpacing + attribute.frame.size.width < self.collectionViewContentSize().width) {
-                    attribute.frame.origin.x = origin + cellSpacing
-                }
-            }
-            return attributes
-        }
-        return nil
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
     }
 }
-
 
 extension RappleColorPickerViewController {
     
-    private func setAllColor(){
+    fileprivate func setAllColor(){
         colorDic[0] = [
             UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
             UIColor(red: 0.886274509803922, green: 0.886274509803922, blue: 0.886274509803922, alpha: 1.0),
@@ -279,5 +277,9 @@ extension RappleColorPickerViewController {
             UIColor(red: 0.0, green: 0.133333333333333, blue: 0.4, alpha: 1.0),
             UIColor(red: 0.0, green: 0.0666666666666667, blue: 0.2, alpha: 1.0)
         ]
+        
+        for i in 0...10 {
+            allColors += colorDic[i]!
+        }
     }
 }
