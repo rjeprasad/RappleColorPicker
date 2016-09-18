@@ -41,11 +41,11 @@ Parameters required to open color pallet
 If any of the key cannot be located in attributes default values will use to create UIs
 ```ruby
 enum RappleCPAttributeKey {
-case Title          `Title text - attributes without Title will hide title bar from UI`
-case BGColor        `Background color`
-case Style          `Cell style (Square, Circle)`
-case TintColor      `TintColor Tint Color (Text color, cell border color)`
-case BorderColor    `Color pallet border Color (Complete pallet border)`
+    case Title          `Title text - attributes without Title will hide title bar from UI`
+    case BGColor        `Background color`
+    case Style          `Cell style (Square, Circle)`
+    case TintColor      `TintColor Tint Color (Text color, cell border color)`
+    case BorderColor    `Color pallet border Color (Complete pallet border)`
 }
 ```
 `Style` key must have one of the these styles
@@ -78,17 +78,18 @@ RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delega
 To receive selected color implement a one of the 'RappleColorPickerDelegate' delegate.
 ```ruby
 func colorSelected(color: UIColor) {
-RappleColorPicker.close()
+    RappleColorPicker.close()
 }
 ```
 or
 ```ruby
 func colorSelected(color:UIColor, tag: Int) {
-switch (tag) {
-case 1: ()
-case 2: ()
-default: ()
-RappleColorPicker.close()
+    switch (tag) {
+        case 1: `set tag one color`
+        case 2: `set tag two color`
+        default: ()
+    }
+    RappleColorPicker.close()
 }
 ```
 If both are implemented priority will be given to `func colorSelected(color:UIColor, tag: Int)` method and `func colorSelected(color: UIColor)` method will not be called
@@ -100,7 +101,7 @@ RappleColorPicker.close()
 ```
 
 ###Demo
-![demo](Example/Demo/Picker.gif)
+![demo](Example/Demo/picker.gif)
 
 ## Example Project
 
