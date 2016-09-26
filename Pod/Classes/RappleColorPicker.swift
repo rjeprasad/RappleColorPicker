@@ -66,7 +66,7 @@ public let RappleCPStyleCircle = "Circle"
  - Remark: And use `close()` method to close color pallate
  - Note: default picker size - 230x358 (without title) or 230x384 (with title)
  */
-public class RappleColorPicker: NSObject {
+open class RappleColorPicker: NSObject {
     
     fileprivate var colorVC : RappleColorPickerViewController?
     fileprivate var background : UIView?
@@ -82,7 +82,7 @@ public class RappleColorPicker: NSObject {
      - parameter delegate: RappleColorPickerDelegate
      - parameter title: color pallet name default "Color Picker", send nil for hide title bar
      */
-    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
         RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, title: title, tag: 0)
     }
     
@@ -95,7 +95,7 @@ public class RappleColorPicker: NSObject {
      - parameter title: color pallet name default "Color Picker", send nil for hide title bar
      - parameter tag: identification tag
      */
-    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
         var attributes : [RappleCPAttributeKey : AnyObject]?
         if title != nil {
             attributes = [.Title : title! as AnyObject]
@@ -112,7 +112,7 @@ public class RappleColorPicker: NSObject {
      - parameter delegate: RappleColorPickerDelegate
      - parameter attributes: look and feel attribute (Title, BGColor, TintColor, Style, BorderColor)
      */
-    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
         RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: 0)
     }
     
@@ -125,7 +125,7 @@ public class RappleColorPicker: NSObject {
      - parameter attributes: look and feel attribute (Title, BGColor, TintColor, Style, BorderColor)
      - parameter tag: identification tag
      */
-    public class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
         
         let this = RappleColorPicker.sharedInstance
         
@@ -173,7 +173,7 @@ public class RappleColorPicker: NSObject {
     }
     
     /** Close color picker Class func */
-    public class func close(){
+    open class func close(){
         let this = RappleColorPicker.sharedInstance
         this.closeTapped()
     }

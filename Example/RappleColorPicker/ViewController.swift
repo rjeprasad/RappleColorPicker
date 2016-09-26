@@ -19,7 +19,7 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
         super.viewDidLoad()
     }
     
-    @IBAction func openColorPallet(sender:UIButton?) {
+    @IBAction func openColorPallet(_ sender:UIButton?) {
         /* picker without title */
         let attributes : [RappleCPAttributeKey : AnyObject] = [
             .BGColor : UIColor.yellow.withAlphaComponent(0.6),
@@ -32,7 +32,7 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
     }
     
     
-    @IBAction func openColorPalletForBox(sender:UIButton?){
+    @IBAction func openColorPalletForBox(_ sender:UIButton?){
         let tag = sender?.tag ?? 0
         RappleColorPicker.openColorPallet(onViewController: self, origin: CGPoint(x: sender!.frame.midX - 115, y: sender!.frame.minY - 50), delegate: self, title: "Color Picker", tag: tag)
     }
