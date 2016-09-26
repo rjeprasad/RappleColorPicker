@@ -25,7 +25,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="openColorPalletForBoxWithSender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="T0W-CK-9IB"/>
+                                    <action selector="openColorPalletForBox:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="x2m-gx-QJt"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBb-uA-Bq3">
@@ -35,7 +35,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="openColorPalletForBoxWithSender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AxT-oa-UNv"/>
+                                    <action selector="openColorPalletForBox:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fjn-FV-gcL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXX-6I-iZb">
@@ -45,7 +45,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="openColorPalletForBoxWithSender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yVi-mw-zrn"/>
+                                    <action selector="openColorPalletForBox:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fGR-Qk-viY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fG-kv-oA5">
@@ -55,7 +55,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="openColorPalletWithSender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Sna-3M-yCs"/>
+                                    <action selector="openColorPallet:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kk2-34-Ixf"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+            <point key="canvasLocation" x="126" y="123"/>
         </scene>
     </scenes>
 </document>
