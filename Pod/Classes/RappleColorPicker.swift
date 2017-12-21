@@ -71,10 +71,9 @@ public let RappleCPStyleSquare = "Square"
 /** Circular shaped color picker cells */
 public let RappleCPStyleCircle = "Circle"
 
-/** RappleColorPicker - Easy to use color pricker for iOS apps
+/** RappleColorPicker - Easy to use color pricker for iOS
  - Remark: Use one of the `openColorPallet(.....)` to open the color pallate
  - Remark: And use `close()` method to close color pallate
- - Note: default picker size - 230x358 (without title) or 230x384 (with title)
  */
 open class RappleColorPicker: NSObject {
     
@@ -86,19 +85,17 @@ open class RappleColorPicker: NSObject {
     
     /**
      Open color picker with with a tag and custom look & feel (optional)
-     - parameter onViewController: Optional Default top most view controller
-     - parameter title: Default empty Optional
-     - parameter origin: Default nil - center on the `onViewController` Optional
-     - parameter cellSize: Default RappleCPCellSize.medium (35 x 35) Optional
-     - parameter attributes: Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) Optional
-     - parameter tag: Identification tag Optional
+     - parameter onViewController : ViewController to open color picker (Optional) : Default nil (will be open on top of all teh views)
+     - parameter title : Text Title (Optinal) : Default nil (title will be hidden)
+     - parameter origin : Origin of the color picker (Optional) Default nil (center on the `onViewController`  or top most ViewController)
+     - parameter cellSize : Individual cell size (enum RappleCPCellSize) (Optional) Default `RappleCPCellSize.medium` (35 x 35)
+     - parameter attributes : Custom look and feel values (Title, BGColor, TintColor, Style, BorderColor) (Optional)
+     - parameter tag : Identification tag (Optional)
      */
     open class func openColorPallet(onViewController viewController: UIViewController? = nil, title: String? = nil, origin: CGPoint? = nil,
                                     cellSize: RappleCPCellSize = .medium, attributes:[RappleCPAttributeKey:AnyObject]? = nil, tag: Int = 0, completion: (( _ color: UIColor, _ tag: Int) -> Void)?) {
         
         let this = RappleColorPicker.sharedInstance
-        
-        let vc: UIViewController = viewController ?? UIApplication.rappleTopViewController()
         
         var attrib : [RappleCPAttributeKey : AnyObject] = attributes ?? [:]
         if title != nil {
@@ -112,14 +109,19 @@ open class RappleColorPicker: NSObject {
         attrib[.BorderColor] = attributes?[.BorderColor] as? UIColor
         attrib[.ScreenBGColor] = attributes?[.ScreenBGColor] as? UIColor
         
-        this.background = UIView(frame: vc.view.bounds)
+        let rect = viewController?.view.bounds ?? UIScreen.main.bounds
+        this.background = UIView(frame: rect)
         this.background?.backgroundColor = UIColor.clear
         
         if let bg = attrib[.ScreenBGColor] as? UIColor {
             this.background?.backgroundColor = bg
         }
         
-        vc.view.addSubview(this.background!)
+        if viewController != nil {
+            viewController!.view.addSubview(this.background!)
+        } else {
+            (UIApplication.shared.delegate?.window as? UIWindow)?.addSubview(this.background!)
+        }
         
         this.closeButton = UIButton(frame: this.background!.bounds)
         this.closeButton?.addTarget(this, action: #selector(RappleColorPicker.closeTapped), for: .touchUpInside)
@@ -135,7 +137,7 @@ open class RappleColorPicker: NSObject {
         
         var xorigin: CGPoint!
         if let origin = origin {
-            let fullSize = vc.view.frame.size
+            let fullSize = rect.size
             var x: CGFloat = origin.x
             var y: CGFloat = origin.y
             if origin.x + totalWidth > fullSize.width {
@@ -148,7 +150,7 @@ open class RappleColorPicker: NSObject {
             if y < 0 { y = 0 }
             xorigin = CGPoint(x: x, y: y)
         } else {
-            let fullSize = vc.view.frame.size
+            let fullSize = rect.size
             let x = (fullSize.width - totalWidth) / 2
             let y = (fullSize.height - totalHeight) / 2
             xorigin = CGPoint(x: x, y: y)
@@ -225,26 +227,3 @@ extension RappleColorPicker {
     }
 }
 
-/**
- UIApplication extension to get top most view controller
- */
-extension UIApplication {
-    
-    /** Find top most presented view controller */
-    class func rappleTopViewController() -> UIViewController {
-        return UIApplication.rappleTopViewController(base: nil)
-    }
-    
-    /** Find top most presented view controller */
-    class func rappleTopViewController(base: UIViewController?) -> UIViewController {
-        var baseView = base
-        if baseView == nil {
-            baseView = UIApplication.shared.delegate?.window??.rootViewController
-        }
-        if let vc = baseView?.presentedViewController {
-            return UIApplication.rappleTopViewController(base: vc)
-        } else {
-            return baseView!
-        }
-    }
-}

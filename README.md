@@ -36,12 +36,13 @@ import RappleColorPicker
 
 ### Required parameters
 
-- `onViewController`  : ViewController to open color picker (Optional) : Default nil (will be open on top most presented ViewController)
+- `onViewController` : ViewController to open color picker (Optional) : Default nil (will be open on top of all teh views)
 - `title` : Text Title (Optinal) : Default nil (title will be hidden)
 - `origin` : Origin of the color picker (Optional) Default nil (center on the `onViewController`  or top most ViewController)
 - `cellSize` : Individual cell size (enum RappleCPCellSize) (Optional) Default `RappleCPCellSize.medium` (35 x 35)
-- `attributes` Custom look and feel values (Title, BGColor, TintColor, Style, BorderColor) (Optional)
-- `tag` Identification tag (Optional)
+- `attributes` : Custom look and feel values (Title, BGColor, TintColor, Style, BorderColor) (Optional)
+- `tag` : Identification tag (Optional)
+
 
 `attribute` dictionary can have all or some of the following key values located in `RappleCPAttributeKey` enum.
 ```ruby
