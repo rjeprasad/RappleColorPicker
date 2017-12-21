@@ -39,8 +39,8 @@ import RappleColorPicker
 - `onViewController`  : ViewController to open color picker (Optional) : Default nil (will be open on top most presented ViewController)
 - `title` : Text Title (Optinal) : Default nil (title will be hidden)
 - `origin` : Origin of the color picker (Optional) Default nil (center on the `onViewController`  or top most ViewController)
-- `cellSize` : Indivudual cell size (enum RappleCPCellSize) (Optional) Default `RappleCPCellSize.medium` (35 x 35)
-- `attributes` Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) (Optional)
+- `cellSize` : Individual cell size (enum RappleCPCellSize) (Optional) Default `RappleCPCellSize.medium` (35 x 35)
+- `attributes` Custom look and feel values (Title, BGColor, TintColor, Style, BorderColor) (Optional)
 - `tag` Identification tag (Optional)
 
 `attribute` dictionary can have all or some of the following key values located in `RappleCPAttributeKey` enum.
@@ -51,6 +51,7 @@ enum RappleCPAttributeKey {
     case Style          `Cell style (Square, Circle)`
     case TintColor      `TintColor Tint Color (Text color, cell border color)`
     case BorderColor    `Color pallet border Color (Complete pallet border)`
+    case ScreenBGColor  `Background color for entire screen below the color picker`
 }
 ```
 `Style` key must have one of the these styles

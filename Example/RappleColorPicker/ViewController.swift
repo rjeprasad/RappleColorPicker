@@ -25,7 +25,8 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
             .BGColor : UIColor.yellow.withAlphaComponent(0.6),
             .TintColor : UIColor.red.withAlphaComponent(0.6),
             .Style : RappleCPStyleCircle as AnyObject,
-            .BorderColor : UIColor.red.withAlphaComponent(0.6)
+            .BorderColor : UIColor.red.withAlphaComponent(0.6),
+            .ScreenBGColor : UIColor.orange.withAlphaComponent(0.4)
         ]
         
         RappleColorPicker.openColorPallet(onViewController: self, origin: CGPoint(x: sender!.frame.midX - 115, y: sender!.frame.minY - 50), attributes: attributes) { (color, tag) in

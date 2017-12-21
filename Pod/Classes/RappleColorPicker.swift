@@ -41,6 +41,8 @@ public enum RappleCPAttributeKey : String {
     case TintColor = "TintColor"
     /** Color pallet border Color (Complete pallet border) */
     case BorderColor = "BorderColor"
+    /** Background color for entire screen below the color picker */
+    case ScreenBGColor = "ScreenBGColor"
 }
 
 /** RappleColorPicker attribute keys */
@@ -107,10 +109,16 @@ open class RappleColorPicker: NSObject {
         attrib[.BGColor] = attributes?[.BGColor] as? UIColor ?? UIColor.darkGray
         attrib[.TintColor] = attributes?[.TintColor] as? UIColor ?? UIColor.white
         attrib[.Style] = (attributes?[.Style] as? String ?? RappleCPStyleCircle) as AnyObject
-        attrib[.BorderColor] = attributes?[.BorderColor] as? UIColor ?? UIColor.darkGray
+        attrib[.BorderColor] = attributes?[.BorderColor] as? UIColor
+        attrib[.ScreenBGColor] = attributes?[.ScreenBGColor] as? UIColor
         
         this.background = UIView(frame: vc.view.bounds)
         this.background?.backgroundColor = UIColor.clear
+        
+        if let bg = attrib[.ScreenBGColor] as? UIColor {
+            this.background?.backgroundColor = bg
+        }
+        
         vc.view.addSubview(this.background!)
         
         this.closeButton = UIButton(frame: this.background!.bounds)

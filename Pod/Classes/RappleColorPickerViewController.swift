@@ -62,6 +62,13 @@ class RappleColorPickerViewController: UIViewController {
         self.view.layer.cornerRadius = 4.0
         self.view.layer.masksToBounds = true
         
+        if let border = attributes[.BorderColor] as? UIColor {
+            self.view.layer.borderColor = border.cgColor
+            self.view.layer.borderWidth = 2
+        } else {
+            self.view.layer.borderWidth = 0
+        }
+        
         if let title = attributes[.Title] as? String {
             titleLabel = UILabel(frame: .zero)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
