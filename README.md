@@ -23,29 +23,27 @@ RappleColorPicker is available through [CocoaPods](http://cocoapods.org). To ins
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "RappleColorPicker"
+pod 'RappleColorPicker'
 ```
 
 ### Please use version 2.0.3 for Swift 3 builds
 
-First import color picker pod in your Swift class
+First import color picker into your Swift class
 
 ```ruby
 import RappleColorPicker
 ```
 
-Parameters required to open color pallet
+### Required parameters
 
-- `onViewController` Optional Default top most view controller
-- `title` Default empty Optional
-- `origin` Default nil - center on the `onViewController` Optional
-- `cellSize` Default RappleCPCellSize.medium (35 x 35) Optional
-- `attributes` Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) Optional
-- `tag` Identification tag Optional
+- `onViewController`  : ViewController to open color picker (Optional) : Default nil (will be open on top most presented ViewController)
+- `title` : Text Title (Optinal) : Default nil (title will be hidden)
+- `origin` : Origin of the color picker (Optional) Default nil (center on the `onViewController`  or top most ViewController)
+- `cellSize` : Indivudual cell size (enum RappleCPCellSize) (Optional) Default `RappleCPCellSize.medium` (35 x 35)
+- `attributes` Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) (Optional)
+- `tag` Identification tag (Optional)
 
-`attribute` dictionary should have these key values located in `RappleCPAttributeKey` enum.
-
-If any of the key cannot be located in attributes default values will use to create UIs
+`attribute` dictionary can have all or some of the following key values located in `RappleCPAttributeKey` enum.
 ```ruby
 enum RappleCPAttributeKey {
     case Title          `Title text - attributes without Title will hide title bar from UI`
@@ -59,12 +57,12 @@ enum RappleCPAttributeKey {
 - `RappleCPStyleSquare` // Squre shaped color picker cells
 - `RappleCPStyleCircle` // Circular shaped color picker cells
 
-Default picker size - 230x358 (without title) or 230x384 (with title)
+Color picker total size will be calculated dynamically based of `cellSize` parameter.
 
-### Open color picker
+### open color picker
 ```ruby
 RappleColorPicker.openColorPallet(onViewController: self, title: "Color Picker",
-                                            origin: point, cellSize: .small,
+                                            origin: point, cellSize: .medium,
                                         attributes: attributes, tag: tag) { (color, tag) in
     // your code here
     RappleColorPicker.close()
@@ -86,7 +84,7 @@ RappleColorPicker.openColorPallet() { (color, _) in
 }
 ```
 
-### To close color picker
+### close color picker
 ```ruby
 RappleColorPicker.close()
 ```
