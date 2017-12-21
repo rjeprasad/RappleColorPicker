@@ -61,14 +61,14 @@ enum RappleCPAttributeKey {
 
 Default picker size - 230x358 (without title) or 230x384 (with title)
 
-- Open color picker with default look & feel
+### Open color picker
 ```ruby
 RappleColorPicker.openColorPallet(onViewController: self, title: "Color Picker", origin: point, cellSize: .small, attributes: attributes, tag: tag) { (color, tag) in
     // your code here
     RappleColorPicker.close()
 }
 ```
-All the parameter of above method comes with values to create default looc and feel. So you can just simply use as below:
+- All the parameter of above method defined with default values to create the default look and feel. So you can just simply call;
 ```ruby
 RappleColorPicker.openColorPallet(tag: tag) { (color, tag) in
     // your code here
@@ -84,7 +84,7 @@ RappleColorPicker.openColorPallet() { (color, _) in
 }
 ```
 
-- To close color picker
+### To close color picker
 ```ruby
 RappleColorPicker.close()
 ```
