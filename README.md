@@ -63,7 +63,9 @@ Default picker size - 230x358 (without title) or 230x384 (with title)
 
 ### Open color picker
 ```ruby
-RappleColorPicker.openColorPallet(onViewController: self, title: "Color Picker", origin: point, cellSize: .small, attributes: attributes, tag: tag) { (color, tag) in
+RappleColorPicker.openColorPallet(onViewController: self, title: "Color Picker",
+                                            origin: point, cellSize: .small,
+                                        attributes: attributes, tag: tag) { (color, tag) in
     // your code here
     RappleColorPicker.close()
 }
