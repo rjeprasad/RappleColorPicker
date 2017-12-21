@@ -1,12 +1,12 @@
 /* **
  RappleColorPicker.swift
- Custom Activity Indicator with swift 2.0
+ Custom Activity Indicator with swift
  
  Created by Rajeev Prasad on 28/11/15.
  
  The MIT License (MIT)
  
- Copyright (c) 2016 Rajeev Prasad <rjeprasad@gmail.com>
+ Copyright (c) 2018 Rajeev Prasad <rjeprasad@gmail.com>
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,19 +29,6 @@
 
 import UIKit
 
-/**
- RappleColorPickerDelegate public delegate
- - Note: Only implement one mehod
- - Remark: If both methods are implemented `colorSelected(_:, tag:)` will be used as the delegate method and `colorSelected(_:)` will not be called
- */
-@objc
-public protocol RappleColorPickerDelegate: NSObjectProtocol {
-    /** Retrieve selected color from color picker */
-    @objc optional func colorSelected(_ color:UIColor)
-    /** Retrieve selected color from color picker with indentification tag */
-    @objc optional func colorSelected(_ color:UIColor, tag: Int)
-}
-
 /** RappleColorPicker attribute keys */
 public enum RappleCPAttributeKey : String {
     /** Title text - attributes without Title will hide/remove title bar from UI */
@@ -54,6 +41,27 @@ public enum RappleCPAttributeKey : String {
     case TintColor = "TintColor"
     /** Color pallet border Color (Complete pallet border) */
     case BorderColor = "BorderColor"
+}
+
+/** RappleColorPicker attribute keys */
+public enum RappleCPCellSize : String {
+    /** Cell size 30 x 30 */
+    case small
+    /** Cell size 35 x 35 */
+    case medium
+    /** Cell size 40 x 40 */
+    case large
+    /** Cell size 50 x 50 */
+    case vlarge
+    
+    var size: CGFloat {
+        switch self {
+        case .small: return 30
+        case .medium: return 35
+        case .large: return 40
+        case .vlarge: return 50
+        }
+    }
 }
 
 /** Squre shaped color picker cells */
@@ -75,76 +83,31 @@ open class RappleColorPicker: NSObject {
     fileprivate static let sharedInstance = RappleColorPicker()
     
     /**
-     Open color picker with default look & feel
-     - Note: default picker size - 230x358 (without title) or 230x384 (with title)
-     - parameter onViewController: opening viewController
-     - parameter origin: origin point of the color pallet
-     - parameter delegate: RappleColorPickerDelegate
-     - parameter title: color pallet name default "Color Picker", send nil for hide title bar
-     */
-    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
-        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, title: title, tag: 0)
-    }
-    
-    /**
-     Open color picker with a tag and default look & feel
-     - Note: default picker size - 230x358 (without title) or 230x384 (with title)
-     - parameter onViewController: opening viewController
-     - parameter origin: origin point of the color pallet
-     - parameter delegate: RappleColorPickerDelegate
-     - parameter title: color pallet name default "Color Picker", send nil for hide title bar
-     - parameter tag: identification tag
-     */
-    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
-        var attributes : [RappleCPAttributeKey : AnyObject]?
-        if title != nil {
-            attributes = [.Title : title! as AnyObject]
-        }
-        
-        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: tag)
-    }
-    
-    /**
-     Open color picker with custom look & feel (optional).
-     - Note: default picker size - 230x358 (without title) or 230x384 (with title)
-     - parameter onViewController: opening viewController
-     - parameter origin: origin point of the color pallet
-     - parameter delegate: RappleColorPickerDelegate
-     - parameter attributes: look and feel attribute (Title, BGColor, TintColor, Style, BorderColor)
-     */
-    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
-        RappleColorPicker.openColorPallet(onViewController: vc, origin: origin, delegate: delegate, attributes: attributes, tag: 0)
-    }
-    
-    /**
      Open color picker with with a tag and custom look & feel (optional)
-     - Note: default picker size - 230x358 (without title) or 230x384 (with title)
-     - parameter onViewController: opening viewController
-     - parameter origin: origin point of the color pallet
-     - parameter delegate: RappleColorPickerDelegate
-     - parameter attributes: look and feel attribute (Title, BGColor, TintColor, Style, BorderColor)
-     - parameter tag: identification tag
+     - parameter onViewController: Optional Default top most view controller
+     - parameter title: Default empty Optional
+     - parameter origin: Default nil - center on the `onViewController` Optional
+     - parameter cellSize: Default RappleCPCellSize.medium (35 x 35) Optional
+     - parameter attributes: Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) Optional
+     - parameter tag: Identification tag Optional
      */
-    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
+    open class func openColorPallet(onViewController viewController: UIViewController? = nil, title: String? = nil, origin: CGPoint? = nil,
+                                    cellSize: RappleCPCellSize = .medium, attributes:[RappleCPAttributeKey:AnyObject]? = nil, tag: Int = 0, completion: (( _ color: UIColor, _ tag: Int) -> Void)?) {
         
         let this = RappleColorPicker.sharedInstance
         
-        let title = attributes?[.Title] as? String
-        let bgColor = attributes?[.BGColor] as? UIColor ?? UIColor.darkGray
-        let tintColor = attributes?[.TintColor] as? UIColor ?? UIColor.white
-        let style = attributes?[.Style] as? String ?? RappleCPStyleCircle
-        let border = attributes?[.BorderColor] as? UIColor ?? UIColor.darkGray
+        let vc: UIViewController = viewController ?? UIApplication.rappleTopViewController()
         
-        var attrib = [RappleCPAttributeKey:AnyObject]()
-        var height: CGFloat = 358
-        if let title = title {
-            height += 26
-            attrib[.Title] = title as AnyObject
+        var attrib : [RappleCPAttributeKey : AnyObject] = attributes ?? [:]
+        if title != nil {
+            attrib[.Title] = title! as AnyObject
+        } else {
+            attrib[.Title] = attributes?[.Title]
         }
-        attrib[.BGColor] = bgColor
-        attrib[.TintColor] = tintColor
-        attrib[.Style] = style as AnyObject
-        attrib[.BorderColor] = border
+        attrib[.BGColor] = attributes?[.BGColor] as? UIColor ?? UIColor.darkGray
+        attrib[.TintColor] = attributes?[.TintColor] as? UIColor ?? UIColor.white
+        attrib[.Style] = (attributes?[.Style] as? String ?? RappleCPStyleCircle) as AnyObject
+        attrib[.BorderColor] = attributes?[.BorderColor] as? UIColor ?? UIColor.darkGray
         
         this.background = UIView(frame: vc.view.bounds)
         this.background?.backgroundColor = UIColor.clear
@@ -154,35 +117,126 @@ open class RappleColorPicker: NSObject {
         this.closeButton?.addTarget(this, action: #selector(RappleColorPicker.closeTapped), for: .touchUpInside)
         this.background?.addSubview(this.closeButton!)
         
-        var point = CGPoint(x: origin.x, y: origin.y)
-        if origin.x < 0 { point.x = 0 }
-        if origin.y < 0 { point.y = 0 }
-        if origin.x + 230 > vc.view.bounds.width { point.x = vc.view.bounds.width - 230 }
-        if origin.y + height > vc.view.bounds.height { point.y = vc.view.bounds.height - height }
+        let totalWidth = (cellSize.size * 7) + 20
+        var totalHeight = (cellSize.size * 11) + 28
         
-        let colVCSize = CGSize(width: 230, height: height)
+        if attrib[.Title] != nil {
+            totalHeight += 35
+        }
+        let xsize = CGSize(width: totalWidth, height: totalHeight)
+        
+        var xorigin: CGPoint!
+        if let origin = origin {
+            let fullSize = vc.view.frame.size
+            var x: CGFloat = origin.x
+            var y: CGFloat = origin.y
+            if origin.x + totalWidth > fullSize.width {
+                x = fullSize.width - totalWidth - 5
+            }
+            if origin.y + totalHeight > fullSize.height {
+                y = fullSize.height - totalHeight - 5
+            }
+            if x < 0 { x = 0 }
+            if y < 0 { y = 0 }
+            xorigin = CGPoint(x: x, y: y)
+        } else {
+            let fullSize = vc.view.frame.size
+            let x = (fullSize.width - totalWidth) / 2
+            let y = (fullSize.height - totalHeight) / 2
+            xorigin = CGPoint(x: x, y: y)
+        }
         
         this.colorVC = RappleColorPickerViewController()
-        this.colorVC?.delegate = delegate
-        this.colorVC?.attributes = attrib
+        this.colorVC?.completion = completion
         this.colorVC?.tag = tag
-        this.colorVC?.size = colVCSize
-        this.colorVC!.view.frame = CGRect(origin: point, size: colVCSize)
+        this.colorVC?.attributes = attrib
+        this.colorVC?.size = xsize
+        this.colorVC?.cellSize = CGSize(width: cellSize.size, height: cellSize.size)
+        this.colorVC!.view.frame = CGRect(origin: xorigin, size: xsize)
         this.background!.addSubview(this.colorVC!.view)
-        
     }
     
     /** Close color picker Class func */
     open class func close(){
-        let this = RappleColorPicker.sharedInstance
-        this.closeTapped()
+        defer {
+            let this = RappleColorPicker.sharedInstance
+            this.closeTapped()
+        }
     }
     
     /** Close color picker */
-    internal func closeTapped(){
+    @objc  internal func closeTapped(){
         self.background?.removeFromSuperview()
         self.colorVC = nil
         self.closeButton = nil
         self.background = nil
+    }
+}
+
+/**
+ RappleColorPickerDelegate public delegate
+ - Note: Only implement one mehod
+ - Remark: If both methods are implemented `colorSelected(_:, tag:)` will be used as the delegate method and `colorSelected(_:)` will not be called
+ */
+@objc
+public protocol RappleColorPickerDelegate: NSObjectProtocol {
+    /** Retrieve selected color from color picker */
+    @available(*, unavailable, message: "Use RappleColorPicker's `completion` of openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    @objc optional func colorSelected(_ color:UIColor)
+    /** Retrieve selected color from color picker with indentification tag */
+    @available(*, unavailable, message: "Use RappleColorPicker's `completion` of openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    @objc optional func colorSelected(_ color:UIColor, tag: Int)
+}
+
+/**
+ Depricated starter methods
+ */
+extension RappleColorPicker {
+    
+    /** Deprecated and unavailabel method */
+    @available(*, unavailable, message: "Use RappleColorPicker's openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?) {
+        
+    }
+    
+    /** Deprecated and unavailabel method */
+    @available(*, unavailable, message: "Use RappleColorPicker's openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, title:String?, tag: Int) {
+        
+    }
+    
+    /** Deprecated and unavailabel method */
+    @available(*, unavailable, message: "Use RappleColorPicker's openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?) {
+    }
+    
+    /** Deprecated and unavailabel method */
+    @available(*, unavailable, message: "Use RappleColorPicker's openColorPallet(onViewController:title:origin:size:attributes:completion) instead")
+    open class func openColorPallet(onViewController vc: UIViewController, origin: CGPoint, delegate:RappleColorPickerDelegate, attributes:[RappleCPAttributeKey:AnyObject]?, tag: Int) {
+        
+    }
+}
+
+/**
+ UIApplication extension to get top most view controller
+ */
+extension UIApplication {
+    
+    /** Find top most presented view controller */
+    class func rappleTopViewController() -> UIViewController {
+        return UIApplication.rappleTopViewController(base: nil)
+    }
+    
+    /** Find top most presented view controller */
+    class func rappleTopViewController(base: UIViewController?) -> UIViewController {
+        var baseView = base
+        if baseView == nil {
+            baseView = UIApplication.shared.delegate?.window??.rootViewController
+        }
+        if let vc = baseView?.presentedViewController {
+            return UIApplication.rappleTopViewController(base: vc)
+        } else {
+            return baseView!
+        }
     }
 }

@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
 s.name             = "RappleColorPicker"
-s.version          = "2.0.3"
-s.summary          = "RappleColorPicker - Easy to use color pricker for iOS apps"
+s.version          = "3.0.1"
+s.summary          = "RappleColorPicker - iOS Color picker"
 
 s.description      = <<-DESC
-Flexible and easy to use complete UI color pricker in swift 3.0.
+Flexible and easy to use `UI color pricker` with swift 4.
 DESC
 
 s.homepage         = "https://github.com/rjeprasad/RappleColorPicker"
@@ -12,7 +12,7 @@ s.license          = 'MIT'
 s.author           = { "Rajeev Prasad" => "rjeprasad@gmail.com" }
 s.source           = { :git => "https://github.com/rjeprasad/RappleColorPicker.git", :tag => s.version.to_s }
 
-s.platform     = :ios, '8.0'
+s.platform     = :ios, '9.0'
 s.requires_arc = true
 s.preserve_paths = 'LICENSE', 'README.md'
 s.source_files = 'Pod/Classes/*'

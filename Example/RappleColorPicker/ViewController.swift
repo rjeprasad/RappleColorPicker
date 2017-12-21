@@ -3,7 +3,7 @@
 //  RappleColorPicker
 //
 //  Created by Rajeev Prasad on 11/28/2015.
-//  Copyright (c) 2016 Rajeev Prasad. All rights reserved.
+//  Copyright (c) 2018 Rajeev Prasad. All rights reserved.
 //
 
 import UIKit
@@ -28,33 +28,27 @@ class ViewController: UIViewController, RappleColorPickerDelegate {
             .BorderColor : UIColor.red.withAlphaComponent(0.6)
         ]
         
-        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPoint(x: sender!.frame.midX - 115, y: sender!.frame.minY - 50), delegate: self, attributes: attributes)
+        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPoint(x: sender!.frame.midX - 115, y: sender!.frame.minY - 50), attributes: attributes) { (color, tag) in
+            self.view.backgroundColor = color
+            RappleColorPicker.close()
+        }
     }
     
     
     @IBAction func openColorPalletForBox(_ sender:UIButton?){
         let tag = sender?.tag ?? 0
-        RappleColorPicker.openColorPallet(onViewController: self, origin: CGPoint(x: sender!.frame.midX - 115, y: sender!.frame.minY - 50), delegate: self, title: "Color Picker", tag: tag)
-    }
-    
-    func colorSelected(_ color: UIColor) {
-        // this method wont be called because `colorSelected(_ color: UIColor, tag: Int)` method will have the priority
-        self.view.backgroundColor = color
-        RappleColorPicker.close()
-    }
-    
-    func colorSelected(_ color: UIColor, tag: Int) {
-        switch tag {
-        case 1:
-            box1.backgroundColor = color
-        case 2:
-            box2.backgroundColor = color
-        case 3:
-            box3.backgroundColor = color
-        default:
-            self.view.backgroundColor = color
+        RappleColorPicker.openColorPallet(title: "Color Picker", tag: tag) { (color, tag) in
+            switch tag {
+            case 1:
+                self.box1.backgroundColor = color
+            case 2:
+                self.box2.backgroundColor = color
+            case 3:
+                self.box3.backgroundColor = color
+            default: ()
+            }
+            RappleColorPicker.close()
         }
-        RappleColorPicker.close()
     }
     
     override func didReceiveMemoryWarning() {

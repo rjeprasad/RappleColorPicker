@@ -5,9 +5,13 @@
 [![Platform](https://img.shields.io/cocoapods/p/RappleColorPicker.svg?style=flat)](http://cocoapods.org/pods/RappleColorPicker)
 
 ## Requirements
-- Xcode 8
-- Swift 3
-- iOS 8+
+- Xcode 9
+- Swift 4
+- iOS 9+
+
+
+### Demo
+![demo](Example/Demo/picker.gif)
 
 ## Example App
 
@@ -21,6 +25,8 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "RappleColorPicker"
 ```
+
+### Please use version 2.0.3 for Swift 3 builds
 
 First import color picker pod in your Swift class
 
@@ -41,11 +47,11 @@ Parameters required to open color pallet
 If any of the key cannot be located in attributes default values will use to create UIs
 ```ruby
 enum RappleCPAttributeKey {
-    case Title          `Title text - attributes without Title will hide title bar from UI`
-    case BGColor        `Background color`
-    case Style          `Cell style (Square, Circle)`
-    case TintColor      `TintColor Tint Color (Text color, cell border color)`
-    case BorderColor    `Color pallet border Color (Complete pallet border)`
+case Title          `Title text - attributes without Title will hide title bar from UI`
+case BGColor        `Background color`
+case Style          `Cell style (Square, Circle)`
+case TintColor      `TintColor Tint Color (Text color, cell border color)`
+case BorderColor    `Color pallet border Color (Complete pallet border)`
 }
 ```
 `Style` key must have one of the these styles
@@ -78,18 +84,18 @@ RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delega
 To receive selected color implement a one of the 'RappleColorPickerDelegate' delegate.
 ```ruby
 func colorSelected(color: UIColor) {
-    RappleColorPicker.close()
+RappleColorPicker.close()
 }
 ```
 or
 ```ruby
 func colorSelected(color:UIColor, tag: Int) {
-    switch (tag) {
-        case 1: `set tag one color`
-        case 2: `set tag two color`
-        default: ()
-    }
-    RappleColorPicker.close()
+switch (tag) {
+case 1: `set tag one color`
+case 2: `set tag two color`
+default: ()
+}
+RappleColorPicker.close()
 }
 ```
 If both are implemented priority will be given to `func colorSelected(color:UIColor, tag: Int)` method and `func colorSelected(color: UIColor)` method will not be called
@@ -99,9 +105,6 @@ If both are implemented priority will be given to `func colorSelected(color:UICo
 ```ruby
 RappleColorPicker.close()
 ```
-
-###Demo
-![demo](Example/Demo/picker.gif)
 
 ## Example Project
 
@@ -113,7 +116,7 @@ Rajeev Prasad, rjeprasad@gmail.com
 
 ## License
 
-Copyright (c) 2016 Rajeev Prasad <rjeprasad@gmail.com>
+Copyright (c) 2018 Rajeev Prasad <rjeprasad@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -132,3 +135,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+

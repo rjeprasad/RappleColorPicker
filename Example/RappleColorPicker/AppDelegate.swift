@@ -3,7 +3,7 @@
 //  RappleColorPicker
 //
 //  Created by Rajeev Prasad on 11/28/2015.
-//  Copyright (c) 2016 Rajeev Prasad. All rights reserved.
+//  Copyright (c) 2018 Rajeev Prasad. All rights reserved.
 //
 
 import UIKit

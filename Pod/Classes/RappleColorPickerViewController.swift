@@ -1,12 +1,12 @@
 /* **
  RappleColorPicker.swift
- Custom Activity Indicator with swift 2.0
+ Custom Activity Indicator with swift
  
  Created by Rajeev Prasad on 28/11/15.
  
  The MIT License (MIT)
  
- Copyright (c) 2016 Rajeev Prasad <rjeprasad@gmail.com>
+ Copyright (c) 2018 Rajeev Prasad <rjeprasad@gmail.com>
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,10 @@ class RappleColorPickerViewController: UIViewController {
     fileprivate var collectionView : UICollectionView!
     fileprivate var titleLabel : UILabel!
     
-    var delegate: RappleColorPickerDelegate?
+    var completion: (( _ color: UIColor, _ tag: Int) -> Void)?
     var tag: Int = 1
+    var size: CGSize = CGSize(width: 230, height: 384)
+    var cellSize = CGSize(width: 20, height: 20)
     var attributes : [RappleCPAttributeKey : AnyObject] = [
         .Title : "Color Picker" as AnyObject,
         .BGColor  : UIColor.black,
@@ -45,9 +47,6 @@ class RappleColorPickerViewController: UIViewController {
     
     fileprivate var colorDic = [Int: [UIColor]]()
     fileprivate var allColors = [UIColor]()
-    
-    var size: CGSize = CGSize(width: 230, height: 384)
-    fileprivate var cellSize = CGSize(width: 30, height: 30)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,35 +60,42 @@ class RappleColorPickerViewController: UIViewController {
         self.view.backgroundColor = attributes[.BGColor] as? UIColor
         
         self.view.layer.cornerRadius = 4.0
-        self.view.layer.borderWidth = 2.0
-        self.view.layer.borderColor = (attributes[.BorderColor] as? UIColor ?? UIColor.darkGray).cgColor
         self.view.layer.masksToBounds = true
         
-        var colViewY:CGFloat = 0
         if let title = attributes[.Title] as? String {
-            titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: size.width, height: 26))
-            titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            titleLabel = UILabel(frame: .zero)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
             titleLabel.textAlignment = .center
             titleLabel.textColor = attributes[.TintColor] as? UIColor
             titleLabel.text = title
             self.view.addSubview(titleLabel)
-            colViewY = 26
         }
         
-        let colW = size.width - 8
-        let colH = size.height - (colViewY + 4) - 4
-        
-        let cellW = (colW - 12) / 7
-        cellSize = CGSize(width: cellW, height: cellW)
-        
-        let colRect = CGRect(x: 4, y: colViewY + 4, width: colW, height: colH)
-        collectionView = UICollectionView(frame: colRect, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.backgroundColor = UIColor.clear
         self.view.addSubview(collectionView)
         collectionView.reloadData()
+        
+        if titleLabel != nil {
+            titleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8).isActive = true
+            titleLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            titleLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            titleLabel.heightAnchor.constraint(equalToConstant: 27).isActive = true
+            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        } else {
+            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        }
+        
+        collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        
+        self.view.layoutIfNeeded()
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,7 +117,7 @@ extension RappleColorPickerViewController: UICollectionViewDataSource, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         cell.backgroundColor = getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row)
         if attributes[.Style] as? String == RappleCPStyleCircle {
-            cell.layer.cornerRadius = 15.0
+            cell.layer.cornerRadius = cellSize.width / 2
         } else {
             cell.layer.cornerRadius = 1.0
         }
@@ -121,11 +127,8 @@ extension RappleColorPickerViewController: UICollectionViewDataSource, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if delegate?.responds(to: #selector(RappleColorPickerDelegate.colorSelected(_:tag:))) == true {
-            delegate?.colorSelected?(getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row), tag: tag)
-        } else if delegate?.responds(to: #selector(RappleColorPickerDelegate.colorSelected(_:))) == true {
-            delegate?.colorSelected?(getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row))
-        }
+        let color = getColor((indexPath as NSIndexPath).section, row: (indexPath as NSIndexPath).row)
+        self.completion?(color, tag)
     }
     
     func getColor(_ section:Int, row:Int) -> UIColor {
@@ -142,6 +145,10 @@ extension RappleColorPickerViewController: UICollectionViewDataSource, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     }
 }
 

@@ -1,5 +1,6 @@
-use_frameworks!
+platform :ios, '9.0'
 
 target 'RappleColorPicker_Example' do
+    use_frameworks!
     pod 'RappleColorPicker', :path => '../'
 end
