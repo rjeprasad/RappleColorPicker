@@ -36,22 +36,23 @@ import RappleColorPicker
 
 Parameters required to open color pallet
 
-- `onViewController` viewController to open color palet - this parameter cannot be nil
-- `origin` origin point of the color pallet - Default : CGPoint.zero
-- `delegate` RappleColorPickerDelegate
-- `title` color pallet name, send nil to hide the title bar
-- `tag` identification tag
-- `attributes` look and feel attribute dictionary (Title, BGColor, TintColor, Style, BorderColor)
+- `onViewController` Optional Default top most view controller
+- `title` Default empty Optional
+- `origin` Default nil - center on the `onViewController` Optional
+- `cellSize` Default RappleCPCellSize.medium (35 x 35) Optional
+- `attributes` Look and feel attribute (Title, BGColor, TintColor, Style, BorderColor) Optional
+- `tag` Identification tag Optional
 
 `attribute` dictionary should have these key values located in `RappleCPAttributeKey` enum.
+
 If any of the key cannot be located in attributes default values will use to create UIs
 ```ruby
 enum RappleCPAttributeKey {
-case Title          `Title text - attributes without Title will hide title bar from UI`
-case BGColor        `Background color`
-case Style          `Cell style (Square, Circle)`
-case TintColor      `TintColor Tint Color (Text color, cell border color)`
-case BorderColor    `Color pallet border Color (Complete pallet border)`
+    case Title          `Title text - attributes without Title will hide title bar from UI`
+    case BGColor        `Background color`
+    case Style          `Cell style (Square, Circle)`
+    case TintColor      `TintColor Tint Color (Text color, cell border color)`
+    case BorderColor    `Color pallet border Color (Complete pallet border)`
 }
 ```
 `Style` key must have one of the these styles
@@ -62,44 +63,26 @@ Default picker size - 230x358 (without title) or 230x384 (with title)
 
 - Open color picker with default look & feel
 ```ruby
-RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delegate: self, title: "title")
+RappleColorPicker.openColorPallet(onViewController: self, title: "Color Picker", origin: point, cellSize: .small, attributes: attributes, tag: tag) { (color, tag) in
+    // your code here
+    RappleColorPicker.close()
+}
 ```
-
-- Open color picker with a tag and default look & feel
+All the parameter of above method comes with values to create default looc and feel. So you can just simply use as below:
 ```ruby
-RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delegate: self, title: "title", tag: 1)
-```
-
-- Open color picker with custom look & feel (optional).
-```ruby
-RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delegate: self, attributes: attributes)
-```
-
-- Open color picker with with a tag and custom look & feel (optional)
-```ruby
-RappleColorPicker.openColorPallet(onViewController: self, origin: origin, delegate: self, attributes: attributes, tag: 1)
-```
-
-
-To receive selected color implement a one of the 'RappleColorPickerDelegate' delegate.
-```ruby
-func colorSelected(color: UIColor) {
-RappleColorPicker.close()
+RappleColorPicker.openColorPallet(tag: tag) { (color, tag) in
+    // your code here
+    RappleColorPicker.close()
 }
 ```
 or
+
 ```ruby
-func colorSelected(color:UIColor, tag: Int) {
-switch (tag) {
-case 1: `set tag one color`
-case 2: `set tag two color`
-default: ()
-}
-RappleColorPicker.close()
+RappleColorPicker.openColorPallet() { (color, _) in
+    // your code here
+    RappleColorPicker.close()
 }
 ```
-If both are implemented priority will be given to `func colorSelected(color:UIColor, tag: Int)` method and `func colorSelected(color: UIColor)` method will not be called
-
 
 - To close color picker
 ```ruby

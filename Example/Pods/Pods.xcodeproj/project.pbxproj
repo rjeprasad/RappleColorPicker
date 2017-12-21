@@ -35,11 +35,11 @@
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		801F61E4EE6CBBD9E25084014C45AB84 /* RappleColorPicker-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RappleColorPicker-umbrella.h"; sourceTree = "<group>"; };
 		83C9E18968B857CEC59FB4745E0F2F28 /* Pods-RappleColorPicker_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RappleColorPicker_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		84CC473F70F485F061851C9E8C04C666 /* RappleColorPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RappleColorPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F9DB4D22541BED5ACF061BB7A5900A9 /* Pods-RappleColorPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RappleColorPicker_Example.modulemap"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		974838C3930929FA62598B7DC3C79224 /* RappleColorPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RappleColorPicker.modulemap; sourceTree = "<group>"; };
-		A15510AAD8B474C8A97439700C02E1BC /* Pods_RappleColorPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RappleColorPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84CC473F70F485F061851C9E8C04C666 /* RappleColorPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RappleColorPicker.framework; path = RappleColorPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F9DB4D22541BED5ACF061BB7A5900A9 /* Pods-RappleColorPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-RappleColorPicker_Example.modulemap"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		974838C3930929FA62598B7DC3C79224 /* RappleColorPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = RappleColorPicker.modulemap; sourceTree = "<group>"; };
+		A15510AAD8B474C8A97439700C02E1BC /* Pods_RappleColorPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_RappleColorPicker_Example.framework; path = "Pods-RappleColorPicker_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC285228E719028F76CDB1108C171325 /* Pods-RappleColorPicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RappleColorPicker_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C41EA15C76848DC080A830B6C113BA53 /* Pods-RappleColorPicker_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RappleColorPicker_Example-resources.sh"; sourceTree = "<group>"; };
 		C87267794B5BDBDD65671D6FAFBD18C9 /* Pods-RappleColorPicker_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RappleColorPicker_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		266D6FF7205714FEBA444D78F1FF072B /* Debug */ = {
+		0E9BA44494CCFF16728EC20EB0E8DBF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1EC11A5E95D7CF4DB2966BF976454FF /* RappleColorPicker.xcconfig */;
 			buildSettings = {
@@ -298,6 +298,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/RappleColorPicker/RappleColorPicker-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/RappleColorPicker/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/RappleColorPicker/RappleColorPicker.modulemap";
 				PRODUCT_NAME = RappleColorPicker;
@@ -311,6 +312,38 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		56DA0B178E51245F3CA5BC3F270F79FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1EC11A5E95D7CF4DB2966BF976454FF /* RappleColorPicker.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/RappleColorPicker/RappleColorPicker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/RappleColorPicker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/RappleColorPicker/RappleColorPicker.modulemap";
+				PRODUCT_NAME = RappleColorPicker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		57942C004E5FCD34EC6EF11F4E9EE2CB /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -327,6 +360,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-RappleColorPicker_Example/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RappleColorPicker_Example/Pods-RappleColorPicker_Example.modulemap";
@@ -397,37 +431,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Release;
-		};
-		77EE901CBD3436565FEF945BFC5D3FFD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1EC11A5E95D7CF4DB2966BF976454FF /* RappleColorPicker.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/RappleColorPicker/RappleColorPicker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/RappleColorPicker/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/RappleColorPicker/RappleColorPicker.modulemap";
-				PRODUCT_NAME = RappleColorPicker;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -506,6 +509,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-RappleColorPicker_Example/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RappleColorPicker_Example/Pods-RappleColorPicker_Example.modulemap";
@@ -548,8 +552,8 @@
 		AC73D18C45F08C8A2BF2385EAA6109E4 /* Build configuration list for PBXNativeTarget "RappleColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				266D6FF7205714FEBA444D78F1FF072B /* Debug */,
-				77EE901CBD3436565FEF945BFC5D3FFD /* Release */,
+				0E9BA44494CCFF16728EC20EB0E8DBF2 /* Debug */,
+				56DA0B178E51245F3CA5BC3F270F79FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

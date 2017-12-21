@@ -1,5 +1,5 @@
 PODS:
-  - RappleColorPicker (3.0.1)
+  - RappleColorPicker (3.0.2)
 
 DEPENDENCIES:
   - RappleColorPicker (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  RappleColorPicker: 53d10ad3f19dad5e302aafe88b6d93efdb614c01
+  RappleColorPicker: 0bbba96cee0e025aa5100aae140f8fd5e480f26d
 
 PODFILE CHECKSUM: 18ec2d1a004de4efd6c1296448da69a780f885a9
 

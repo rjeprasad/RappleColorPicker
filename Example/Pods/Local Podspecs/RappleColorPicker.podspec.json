@@ -1,6 +1,6 @@
 {
   "name": "RappleColorPicker",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "summary": "RappleColorPicker - iOS Color picker",
   "description": "Flexible and easy to use `UI color pricker` with swift 4.",
   "homepage": "https://github.com/rjeprasad/RappleColorPicker",
@@ -10,10 +10,10 @@
   },
   "source": {
     "git": "https://github.com/rjeprasad/RappleColorPicker.git",
-    "tag": "3.0.1"
+    "tag": "3.0.2"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "requires_arc": true,
   "preserve_paths": [
